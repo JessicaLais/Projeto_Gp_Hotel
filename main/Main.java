@@ -26,5 +26,17 @@ public class Main {
 
 		chaves = new ArrayList<Integer>();
 		fila = new ArrayList<Hospede>();
+		try {
+			while (quartos.size() < 10 + Configs.QUANTIDADE_DE_QUARTOS) {
+				quartos.add(new Quarto());
+				Thread.sleep(10);
+			}
+			System.out.println("----------------------");
+			System.out.println("Quartos:");
+			for (Quarto quarto : quartos) {
+				System.out.println("    " + quarto.numero);
+			}
+			System.out.println("-----------------------");
+		} catch (Exception e) {}
 	}
 }
