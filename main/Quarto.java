@@ -17,4 +17,17 @@ public class Quarto {
 
 		this.hospedes = new ArrayList<Hospede>();
 	}
+
+	public synchronized void inserirHospede(Hospede hospede) throws Exception {
+		
+		// Barrar pra impedir de adicionar mais que a capacidade máxima
+		if (this.hospedes.size() >= 4) {
+			throw new Exception("Não é possível adicionar " +
+					hospede.nome + " no quarto " + this.numero +
+					". Quarto cheio");
+		}
+		this.hospedes.add(hospede);
+		this.vago = false;// Ocupando e sujando o quarto
+		this.limpo = false;
+	}
 }
