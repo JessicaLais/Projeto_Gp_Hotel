@@ -10,9 +10,6 @@ public class Recepcionista extends Thread {
         this.start();
     }
 
-    public void run(){
-
-    }
     public void run() {
 		try {
 			while(true) { 
@@ -23,4 +20,5 @@ public class Recepcionista extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 }
