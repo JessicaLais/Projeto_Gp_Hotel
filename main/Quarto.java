@@ -30,4 +30,8 @@ public class Quarto {
 		this.vago = false;// Ocupando e sujando o quarto
 		this.limpo = false;
 	}
+
+	public synchronized List<Hospede> getHospedes(){
+		return this.hospedes;
+	}
 }
