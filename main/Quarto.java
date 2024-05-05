@@ -31,6 +31,14 @@ public class Quarto {
 		this.limpo = false;
 	}
 
+	public synchronized void retirarHospede(Hospede hospede) {
+		this.hospedes.remove(this.hospedes.indexOf(hospede));
+		
+		//Está vago novamente
+		if (this.hospedes.size() <= 0) this.vago = true;
+		this.limpo = false;
+	}
+
 	public synchronized List<Hospede> getHospedes(){
 		return this.hospedes;
 	}
