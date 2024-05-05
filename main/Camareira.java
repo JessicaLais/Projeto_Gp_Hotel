@@ -21,5 +21,31 @@ public class Camareira extends Thread{
 	
 	// Procura algum quarto para limpar
 	public void tentarLimpar() throws InterruptedException {
+    //Confere quarto por quarto
+    for (Quarto quarto : Main.quartos) {
+        boolean vazio = true;
         
-    }
+        // Se o quarto estiver limpo, ela ignora
+        if (quarto.limpo) continue;
+        
+        // Se a chave do quarto estiver na recepção
+        // É por que alguém foi passear e deixou lá
+        if (Main.chaves.contains(quarto.numero)) {
+            
+            // Checa se o quarto está vazio
+            for (Hospede h : quarto.getHospedes()) {
+                if (!h.passeando) {
+                    vazio = false;
+                    break;
+                }
+            }
+            
+            if (!vazio) continue;
+            
+            Main.chaves.remove(Main.chaves.indexOf(quarto.numero)); // Pega as chaves
+            limpar(quarto);
+            Main.chaves.add(quarto.numero); // Devolve as chaves
+            break;
+                    }
+                }
+}
