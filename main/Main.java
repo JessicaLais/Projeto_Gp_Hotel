@@ -38,5 +38,64 @@ public class Main {
 			}
 			System.out.println("-----------------------");
 		} catch (Exception e) {}
+		try {
+			while (hospedes.size() < 50 + Configs.QUANTIDADE_DE_HOSPEDES) {
+				hospedes.add(new Hospede()); 
+				Thread.sleep(10);
+			}
+
+			
+			List<Integer> familias = new ArrayList<Integer>();
+
+			
+			for (Hospede h : hospedes) {
+				if (!familias.contains(h.familia)) familias.add(h.familia);
+			}
+
+			
+			for (int f : familias ) {
+				for (Hospede h : hospedes) {
+					if (h.familia == f) fila.add(h);
+				}
+			}
+
+			
+			System.out.println("--------------------");
+			System.out.println("FILA:");
+			for (Hospede h : fila) {
+				System.out.println("    " + h.nome);
+			}
+			System.out.println("--------------------");
+
+
+		} catch (Exception e) {}
+
+		try {
+			
+			while (camareiras.size() < 10 + Configs.QUANTIDADE_DE_CAMAREIRAS) {
+				camareiras.add(new Camareira()); 
+				Thread.sleep(100);
+			}
+		} catch (Exception e) {}
+
+		try {
+		
+			while (recepcionistas.size() < 5 + Configs.QUANTIDADE_DE_RECEPCIONISTAS) {
+				recepcionistas.add(new Recepcionista());
+				Thread.sleep(100);
+			}
+		} catch (Exception e) {}
+
+		try {
+			
+			while (Configs.GERAR_HOSPEDES) {
+				Thread.sleep(1000);
+				if (hospedes.size() < 50) {
+					Hospede novoHospede = new Hospede();
+					hospedes.add(novoHospede); 
+					fila.add(novoHospede); 
+				}
+			}
+		} catch (Exception e) {}
 	}
 }
