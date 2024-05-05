@@ -13,4 +13,14 @@ public class Recepcionista extends Thread {
     public void run(){
 
     }
+    public void run() {
+		try {
+			while(true) { 
+				tentarAlocar(); // Tenta alocar a "pessoa"
+				Thread.sleep(1000); // Demora 1 segundo entre cada tentiva
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
