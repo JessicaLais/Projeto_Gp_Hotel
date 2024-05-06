@@ -1,9 +1,9 @@
 package main;
 
 public class Configs {
-    //pra caso queira ficar infinito
+    //func infinito =true
 	public static boolean GERAR_HOSPEDES = false;
-	//aumentar a qtd 
+	//qtd extras
 	public static int QUANTIDADE_DE_QUARTOS = 0;
 	public static int QUANTIDADE_DE_HOSPEDES = 0;
 	public static int QUANTIDADE_DE_CAMAREIRAS = 0;
