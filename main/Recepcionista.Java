@@ -36,4 +36,31 @@ public class Recepcionista extends Thread {
 			}
 		} catch (Exception e) { return; }
 	}
+    // Aloca uma pessoa para um quarto
+	public synchronized void alocar(Hospede hospede) throws Exception {
+
+		// Todos os quartos do hotel
+		List<Quarto> quartos = Main.quartos;
+
+		// Procura alguém da família dele em algum quarto
+		for (Quarto quarto : quartos) {
+			// Hospede sozinho
+			if (hospede.familia == 0) break;
+
+			// Confere se tem alguém e se tem espaço ao mesmo tempo
+			if (quarto.getHospedes().size() <= 0 
+					|| quarto.getHospedes().size() >= 4) continue;
+
+			// Confere se esse quarto é da família dele
+			if (quarto.getHospedes().get(0).familia == hospede.familia) {
+				quarto.inserirHospede(hospede); // Insere o hospede
+				hospede.quarto = quarto; // Designa o quarto à ele
+				Main.fila.remove(hospede);
+				//Log
+				System.out.println("\n");
+				System.out.println(this.nome + " alocou "+ hospede.nome + " para o quarto " 
+				+ quarto.numero + " onde estava sua família " + hospede.familia + ".");
+				return;
+			}
+		}
 }
