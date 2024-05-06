@@ -26,11 +26,71 @@ public class Hospede extends Thread{
 		
 		this.start();
 	}
+	@Override
+	public void run() {
+		System.out.println("\n");
+		System.out.println(this.nome + " chegou ao hotel!");
+		try {
+			this.escolha = 0;
+			Thread.sleep(5000);
+			while (true) { 
+				if (this.quarto == null) {
+					if (tentativa == 1) { passearPelaCidade(); }
+					if (tentativa >= 2) { 
+						reclamar(); 
+						Main.fila.remove(this); 
+						Main.hospedes.remove(this);
+						break; 
+					}
+					
+					esperar();
+					continue;
+				}
+				
+				// Vai embora
+				if (irEmbora) { 
+					int numQuarto = this.quarto.numero;
+					this.quarto.retirarHospede(this); // Sai da lista do quarto
+					this.quarto = null; // Não pertencen a mais nenhum quarto
+					Main.hospedes.remove(this); // Sai da lista de hospedes
+					
+					System.out.println("\n");
+					System.out.println(this.nome + " saiu do quarto " + numQuarto);
+					System.out.println(this.nome + " foi embora do Hotel. Agora têm " + Main.hospedes.size() + " hospedes no hotel");
+					return; 
+				}
+				
+				// Apenas fica no quarto
+				if (this.escolha < 3) {}
+				
+				// Vai passear
+				else if (this.escolha < 5) { passear(); }
+				
+				// Toma a iniciativa de ir embora
+				else if (this.escolha == 5) { 
+					irEmbora = true;
+					
+					// Levando toda a família junto com ele
+					if (this.familia == 0) continue;
+					for (Hospede hospede : Main.hospedes) {
+						if (hospede.familia == this.familia) hospede.irEmbora = true;
+					}
+				}
+				
+				// Gera uma escolha entre 0 (inclusivo) e 6 (não inclusivo)
+				// Caso tenha voltado de um passeio, vai ficar no quarto
+				this.escolha = random.nextInt(6);
+				Thread.sleep(3000);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	// hóspede cansado de esperar vai passear
 	public synchronized void passearPelaCidade() throws InterruptedException {
 		Main.fila.remove(this); // Sai da fila
 		this.passeando = true; // Vai passear
-		//Log
+	
 		System.out.println("\n");
 		System.out.println(this.nome + " cansou de esperar, foi passear.");
 		Thread.sleep(Configs.TEMPO_PASSEIO); // Tempo passeando
