@@ -63,4 +63,22 @@ public class Recepcionista extends Thread {
 				return;
 			}
 		}
+        // Não achou um quarto com sua família? Vamos achar um disponível então
+		for (Quarto quarto : quartos) {
+			if (quarto.vago && quarto.limpo) {
+				quarto.inserirHospede(hospede); // Insere o hospede
+				hospede.quarto = quarto; // Designa o quarto à ele
+				Main.fila.remove(Main.fila.indexOf(hospede));
+				//Log
+				System.out.println("\n");
+				System.out.println(this.nome + " alocou " + hospede.nome + 
+						" para o quarto " + quarto.numero + ".");
+				return;
+			}
+		}
+
+		// Depois de olhar todos os quartos e não achar nenhum disponível, dispara um erro
+		throw new Exception("Não há nenhum quarto disponível para alocar o hóspede " 
+				+ hospede.nome + ".");
+	}
 }
