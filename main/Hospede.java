@@ -123,5 +123,33 @@ public class Hospede extends Thread{
 		
 		tentarRetornar();
 	}
+	public synchronized void tentarRetornar() throws InterruptedException {
+		if (!passeando) return;
+		
+		// Se as chaves não estiverem na recepção, significa que a camareira ainda está lá.Então passeia dnv
+		if (!Main.chaves.contains(this.quarto.numero)) { 
+			System.out.println("\n");
+			System.out.println(this.nome + " tentou voltar para o quarto depois do passeio, "
+					+ "mas a camareira ainda estava o limpando.");
+			passear();
+			return;
+		}
+		// Pega as chaves novamente
+		Main.chaves.remove(Main.chaves.indexOf(this.quarto.numero));
+		
+		retornar();
+	}
+	// Volta para o quarto
+	public void retornar() {
+		// Não está mais passeando
+		this.passeando = false;
+		// Traz o resto do quarto junto
+		for (Hospede hospede : this.quarto.getHospedes()) {
+			if (hospede.equals(this)) continue; // Se for ele mesmo, ignore
+			if (hospede.passeando) hospede.retornar();
+		}
+		System.out.println("\n");
+		System.out.println(this.nome + " voltou do passeio para o quarto " + this.quarto.numero);
+	}
 }
 	
