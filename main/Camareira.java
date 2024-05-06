@@ -66,4 +66,16 @@ public class Camareira extends Thread{
 			}
 		}
 	}
+	
+	// Limpa um quarto
+	public void limpar(Quarto quarto) throws InterruptedException {
+		//Log
+		System.out.println("\n");
+		System.out.println(this.nome + " começou a limpar o quarto " + quarto.numero);
+		Thread.sleep(Configs.TEMPO_DE_LIMPEZA); // Passa o tempo limpando
+		quarto.limpo = true; // Terminou de limpar, agora ele está limpo
+		//Log
+		System.out.println("\n");
+		System.out.println(this.nome + " limpou o quarto " + quarto.numero + ".");
+	}
 }
