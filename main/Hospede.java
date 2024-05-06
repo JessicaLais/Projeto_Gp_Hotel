@@ -26,5 +26,42 @@ public class Hospede extends Thread{
 		
 		this.start();
 	}
+	// hóspede cansado de esperar vai passear
+	public synchronized void passearPelaCidade() throws InterruptedException {
+		Main.fila.remove(this); // Sai da fila
+		this.passeando = true; // Vai passear
+		//Log
+		System.out.println("\n");
+		System.out.println(this.nome + " cansou de esperar, foi passear.");
+		Thread.sleep(Configs.TEMPO_PASSEIO); // Tempo passeando
+		Main.fila.add(this);
+	}
+
+	public synchronized void passear() throws InterruptedException {
+		
+		if (!Main.chaves.contains(this.quarto.numero) && this.escolha != 0) { Main.chaves.add(quarto.numero); }
+		
+		this.escolha = 0;
+
+		// Agora, o resto do quarto tem que ir passear também
+		for (Hospede hospede : this.quarto.getHospedes()) {
+			if (hospede.equals(this)) continue; // Se for ele mesmo, ignore
+			if (!hospede.passeando) hospede.escolha = 3;
+		}
+		
+		this.escolha = 0;
+		
+		// O quarto foi usado, logo não está limpo
+		this.quarto.limpo = false;
+		
+		this.passeando = true; // Vai passear
+
+		System.out.println("\n");
+		System.out.println(this.nome + "(quarto " + this.quarto.numero + ") foi passear!");
+
+		Thread.sleep(Configs.TEMPO_PASSEIO);
+		
+		tentarRetornar();
+	}
 }
 	
