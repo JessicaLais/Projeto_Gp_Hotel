@@ -86,6 +86,10 @@ public class Hospede extends Thread{
 			e.printStackTrace();
 		}
 	}
+	public void esperar() throws InterruptedException {
+		Thread.sleep(Configs.TEMPO_ESPERA); // Espera
+		if (quarto == null) tentativa++;
+	}
 	// hóspede cansado de esperar vai passear
 	public synchronized void passearPelaCidade() throws InterruptedException {
 		Main.fila.remove(this); // Sai da fila
@@ -150,6 +154,10 @@ public class Hospede extends Thread{
 		}
 		System.out.println("\n");
 		System.out.println(this.nome + " voltou do passeio para o quarto " + this.quarto.numero);
+	}
+	public void reclamar() {
+	System.out.println("\n");
+	System.out.println(this.nome + " deixou sua reclamação por esperar demais!");
 	}
 }
 	
