@@ -22,7 +22,7 @@ public class Hospede extends Thread{
 		if (random.nextInt(101) <= Configs.PROBABILIDADE_SOZINHO) this.familia = 0;
 		else this.familia = random.nextInt(1, Configs.QUANTIDADE_DE_FAMILIAS + 1);
 		
-		this.nome = "Hospede" + Main.rotatividade + "(" + this.familia + ")";
+		this.nome = "Hospede" + (Main.hospedes.size() + 1) + "(" + this.familia + ")";
 		
 		this.start();
 	}
