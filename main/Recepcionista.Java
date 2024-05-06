@@ -20,5 +20,20 @@ public class Recepcionista extends Thread {
 			e.printStackTrace();
 		}
 	}
+        // Procura um hospede ou um grupo para tentar alocar
+	public void tentarAlocar() {
 
+		// Hóspedes aguardando alocação
+		List<Hospede> hospedes = Main.fila;
+
+		// Se não tiver ninguém esperando na fila, não há nada a fazer
+		if (hospedes.size() <= 0) return;
+
+		// Tenta alocar o primeiro da fila ou alguém que tem uma família em um quarto
+		try {
+			for (Hospede hospede : hospedes) {
+				alocar(hospede);
+			}
+		} catch (Exception e) { return; }
+	}
 }
