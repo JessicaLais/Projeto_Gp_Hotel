@@ -7,7 +7,6 @@ public class Quarto {
 	boolean vago;
 	boolean limpo;
 	private List<Hospede> hospedes;
-	boolean limpando;/* "limpando" criada para evitar o grande conflito entre camareiras*/
 
 	public Quarto() {
 		this.numero = Main.quartos.size() + 1;
